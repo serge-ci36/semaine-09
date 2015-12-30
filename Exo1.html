@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
+	<style type='text/css'>
+	
+		body {margin-top:20px ;}
+	
+		.fieldset {
+		  padding:10px;
+		  margin: 10px;
+		  border: 2px inset #EEEEEE;
+		  border-radius:5px ;
+		  background-color:transparent;
+		  background: transparent; 
+		}	
+
+		.legend {
+			color:#9A9A9A ;
+			margin: 0px;
+			width:inherit; /* Or auto */
+			padding:0 10px; /* To give a bit of padding on the left and right */
+			border-bottom:none; 
+		}
+
+		.ecritstyl {
+			font-size:18px ;
+			color:#9A9A9A ;
+		}
+		
+	</style>
+	
+	<title>contacts</title>
+	
+</head>
+
+<body class="container">
+
+
+	<div>
+		<input id="prenom" class="control-label input-lg col-sm-3" style="margin:10px" placeholder="Prénom" />
+		<input id="nom" class="control-label input-lg col-sm-3" style="margin:10px"  placeholder="Nom" />
+		<input id="numero" class="control-label input-lg col-sm-3" style="margin:10px"  placeholder="Numéro" />
+		<button id="ajouter" class="btn-lg btn-primary" style="margin:10px;width:204px" >Ajouter</button>
+	</div>
+
+	<fieldset class="fieldset "> 
+		<legend class="legend">Liste des contacts</legend>
+		<ul id="liste" class="ecritstyl" ></ul>
+	</fieldset>
+
+	<br/>
+	
+	<div>
+		<input id="recherche" class="control-label input-lg col-sm-4"  style="margin:10px" placeholder="Recherche" />
+		<button id="rechercher" class="btn-lg btn-primary " style="margin:10px;width:180px">Rechercher</button>
+	</div>
+
+	<br/>
+	
+	<ul id="resultats" class="ecritstyl"></ul>
+
+
+	<script>
+        $liste = document.getElementById("liste");
+        $prenom = document.getElementById("prenom");
+        $nom = document.getElementById("nom");
+        $numero = document.getElementById("numero");
+        $ajouter = document.getElementById("ajouter");
+        $recherche = document.getElementById("recherche");
+        $rechercher = document.getElementById("rechercher");
+        $resultats = document.getElementById("resultats");
+        
+        contacts = [{
+            prenom: "John",
+            nom: "DOE",
+            numero: "0123456789"
+        }, {
+            prenom: "Jane",
+            nom: "DOE",
+            numero: "0123456789"
+        }];
+        
+        function texteContact(contact) {
+            return contact.prenom + " " + contact.nom + " (" + contact.numero + ")";
+        }
+        
+        function afficherListe() {
+            elements = "";
+            for (i = 0; i < contacts.length; i++) {
+                elements += "<li>" + texteContact(contacts[i]) + "</li>";
+            }
+            $liste.innerHTML = elements;
+        }
+        
+        function ajouter() {
+            contacts.push({
+                prenom: $prenom.value,
+                nom: $nom.value,
+                numero: $numero.value
+            });
+            afficherListe();
+        }
+        
+        function rechercher() {
+            recherche = $recherche.value;
+            elements = "";
+            for (i = 0; i < contacts.length; i++) {
+                if (contacts[i].prenom == recherche || contacts[i].nom == recherche || contacts[i].numero == recherche) {
+                    elements += "<li>" + texteContact(contacts[i]) + "</li>";
+                }
+            }
+            $resultats.innerHTML = elements;
+        }
+        
+        $ajouter.onclick = ajouter;
+        $rechercher.onclick = rechercher;
+        afficherListe();
+		
+	</script>
+	
+</body>
